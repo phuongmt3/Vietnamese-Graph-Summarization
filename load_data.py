@@ -16,7 +16,7 @@ with open('./VLSP Dataset/vietnamese-stopwords-dash.txt', 'r', encoding='utf-8')
         stop_w.append(w.strip())
 stop_w.extend([c for c in '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~…“”’‘'])
 
-with open('./VLSP Dataset/LDA_models_4top.pkl', mode='rb') as fp:
+with open('./VLSP Dataset/LDA_models.pkl', mode='rb') as fp:
     cate_models = pickle.load(fp)
 
 
