@@ -10,7 +10,7 @@ Source code for The International Conference on Asian Language Processing (IALP)
 Make use of data in train set and validation set. You can change the arguments and run file train.py.
 
 ## Test
-Make use of data in test set. You can load our pretrained model or your own trained model and run file test.py, which will create a 'VLSP Dataset/results.txt' file containing all created summaries.
+Make use of data in test set. You can load your own trained model and run file test.py, which will create a 'VLSP Dataset/results.txt' file containing all created summaries.
 You can print out the result on your own or upload the result file to [AI Hub](https://aihub.vn/competitions/341) for the detailed report.
 
 ## References
