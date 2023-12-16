@@ -16,3 +16,13 @@ You can print out the result on your own or upload the result file to [AI Hub](h
 ## References
 
 ```
+@INPROCEEDINGS{10337087,
+  author={Mai, Tu-Phuong and Nguyen, Quoc-An and Can, Duy-Cat and Le, Hoang-Quynh},
+  booktitle={2023 International Conference on Asian Language Processing (IALP)}, 
+  title={Contrastive Hierarchical Discourse Graph for Vietnamese Extractive Multi-Document Summarization}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={118-123},
+  doi={10.1109/IALP61005.2023.10337087}}
+```
