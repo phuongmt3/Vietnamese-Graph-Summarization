@@ -258,7 +258,7 @@ def loadValGraphs():
     for cluster in range(100):
         print(cluster)
         sents, sentVecs, scores, secIDs = [], [], [], []
-        with open('./VLSP Dataset/wordVec/val/val_' + str(cluster) + '.pkl', 'rb') as fp:
+        with open('./VLSP Dataset/wordVec/validation/validation_' + str(cluster) + '.pkl', 'rb') as fp:
             clusTree = pickle.load(fp)
         doc_endsec, secnum, sentnum = divideIntoSections_lda()
         doc_sec_mask = np.zeros((len(clusTree['docs']), secnum))
