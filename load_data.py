@@ -253,8 +253,8 @@ def loadTrainGraphs():
 def loadValGraphs():
     global clusTree
     testGraphs = []
-    with open('./VLSP Dataset/val_segmentedSumm.pkl', 'rb') as f:
-        goldenList = pickle.load(f)
+    with open('./VLSP Dataset/validation_segmentedSumm.txt', 'r', encoding='utf-8') as f:
+        goldenList = json.load(f)
     for cluster in range(100):
         print(cluster)
         sents, sentVecs, scores, secIDs = [], [], [], []
