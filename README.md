@@ -1,5 +1,7 @@
 # Vietnamese Graph Summarization (Frozen Fusion)
-Source code for The International Conference on Asian Language Processing (IALP) 2023 paper: Contrastive Hierarchical Discourse Graph for Vietnamese Extractive Multi-Document Summarization
+Updated source code for _Frozen Fusion_ model, a hybrid summarization model for Vietnamese Multi-document Summarization problem.
+
+Included source code for _Graph model_ published in The International Conference on Asian Language Processing (IALP) 2023 paper: Contrastive Hierarchical Discourse Graph for Vietnamese Extractive Multi-Document Summarization.
 
 ## Data preprocessing
 - All article raw texts and golden summaries need to be tokenized with the corresponding tokenizer
