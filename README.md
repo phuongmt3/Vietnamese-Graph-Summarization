@@ -1,4 +1,4 @@
-# Vietnamese Graph Summarization (CHDG)
+# Vietnamese Graph Summarization (Frozen Fusion)
 Source code for The International Conference on Asian Language Processing (IALP) 2023 paper: Contrastive Hierarchical Discourse Graph for Vietnamese Extractive Multi-Document Summarization
 
 ## Data preprocessing

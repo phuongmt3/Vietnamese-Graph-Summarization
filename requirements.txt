@@ -1,0 +1,10 @@
+torch
+numpy
+rouge~=1.0.1
+pyvi
+pandas
+scikit-learn
+transformers
+wandb
+underthesea
+tqdm
