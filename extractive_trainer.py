@@ -55,7 +55,7 @@ def main():
     print(model)
 
     model_save_root_path = '/content/drive/MyDrive/Summarization/checkpoints'
-    best_r2, best_s_loss, best_c_loss, c_loss_patience = 0, 10000, 10000, 2
+    best_r2, best_s_loss, best_c_loss, c_loss_patience, s_loss_patience = 0, 10000, 10000, 2, 10
     model_state_dicts = []
     model_save_path = ''
 
@@ -74,18 +74,22 @@ def main():
             else:
                 c_loss_patience = 2
                 best_c_loss = loss
-        elif best_c_loss > best_s_loss:
+        elif s_loss_patience <= 0 and best_c_loss > best_s_loss:
             c_loss_patience = 2
 
         model_state_dict = copy.deepcopy(model.state_dict())
         model_state_dicts.append(model_state_dict)
-        if c_loss_patience <= 0 and (rouge2_score > best_r2 or loss < best_s_loss):
-            model_save_path = os.path.join(model_save_root_path,
-                                           run_name + "_e_{}_{}.pt".format(i, round(rouge2_score, 6)))
-            torch.save(model.state_dict(), model_save_path)
-            best_r2 = max(best_r2, rouge2_score)
-            best_s_loss = min(best_s_loss, loss)
-            print("Epoch {} Has best loss of {}, saved Model to {}".format(i, best_s_loss, model_save_path))
+        if c_loss_patience <= 0:
+            if rouge2_score > best_r2 or loss < best_s_loss:
+                model_save_path = os.path.join(model_save_root_path,
+                                               run_name + "_e_{}_{}.pt".format(i, round(rouge2_score, 6)))
+                torch.save(model.state_dict(), model_save_path)
+                best_r2 = max(best_r2, rouge2_score)
+                best_s_loss = min(best_s_loss, loss)
+                s_loss_patience = 10
+                print("Epoch {} Has best loss of {}, saved Model to {}".format(i, best_s_loss, model_save_path))
+            else:
+                s_loss_patience -= 1
     wandb_finish()
 
     model.load_state_dict(torch.load(model_save_path, device), strict=True)
