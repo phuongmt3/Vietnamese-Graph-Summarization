@@ -62,7 +62,7 @@ def main():
     for i in range(epochs):
         train_e2e(train_loader, scheduler, model, optimizer, loss_func, log_every, i + 1, c_loss_patience > 0)
         torch.cuda.empty_cache()
-        rouge2_score, loss = val_e2e(val_loader, scheduler, model, optimizer, loss_func)
+        rouge2_score, loss = val_e2e(val_loader, scheduler, model, loss_func)
         torch.cuda.empty_cache()
 
         if c_loss_patience > 0:
@@ -71,14 +71,15 @@ def main():
                 if c_loss_patience == 0:
                     model.freeze_graph_encoder()
                     print("Freezed Graph Encoder")
-                    best_s_loss = 10000
             else:
                 c_loss_patience = 2
                 best_c_loss = loss
+        elif best_c_loss > best_s_loss:
+            c_loss_patience = 2
 
         model_state_dict = copy.deepcopy(model.state_dict())
         model_state_dicts.append(model_state_dict)
-        if rouge2_score > best_r2 or loss < best_s_loss:
+        if c_loss_patience <= 0 and (rouge2_score > best_r2 or loss < best_s_loss):
             model_save_path = os.path.join(model_save_root_path,
                                            run_name + "_e_{}_{}.pt".format(i, round(rouge2_score, 6)))
             torch.save(model.state_dict(), model_save_path)
@@ -88,5 +89,5 @@ def main():
     wandb_finish()
 
     model.load_state_dict(torch.load(model_save_path, device), strict=True)
-    preds, refs, macro_scores = val_e2e(val_loader, mode='test', max_word_num=200)
+    preds, refs, macro_scores = val_e2e(val_loader, scheduler, model, loss_func, mode='test', max_word_num=200)
     print(macro_scores)

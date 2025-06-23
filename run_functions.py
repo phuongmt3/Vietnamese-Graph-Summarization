@@ -62,7 +62,7 @@ def train_e2e(train_loader, scheduler, model, optimizer, loss_func, log_every, e
     wandb.log({'train/epoch': epoch, 'train/e_s_loss': sum(epoch_loss[0]) / len(epoch_loss[0]),
                'train/e_c_loss': sum(epoch_loss[1]) / len(epoch_loss[1])})
 
-def val_e2e(val_loader, scheduler, model, optimizer, loss_func, mode='val', max_word_num=200):
+def val_e2e(val_loader, scheduler, model, loss_func, mode='val', max_word_num=200):
     model.eval()
     epoch_loss, batch_num = [[], []], 0
     refs, preds = [], []
@@ -100,12 +100,13 @@ def val_e2e(val_loader, scheduler, model, optimizer, loss_func, mode='val', max_
 
     if mode == 'val':
         scheduler.step(0.1/ranking_scores[5])
+        e_loss = sum(epoch_loss[0]) / len(epoch_loss[0]) + sum(epoch_loss[1]) / len(epoch_loss[1])
         wandb.log({'val/e_s_loss': sum(epoch_loss[0]) / len(epoch_loss[0]),
                     'val/e_c_loss': sum(epoch_loss[1]) / len(epoch_loss[1]),
                     'val/e_P': ranking_scores[3],
                     'val/e_R': ranking_scores[4],
                     'val/e_F': ranking_scores[5]})
-        return ranking_scores[5], sum(epoch_loss[0]) / len(epoch_loss[0])
+        return ranking_scores[5], e_loss
     return preds, refs, ranking_scores
 
 def get_summary(scores, sents, max_word_num=200):
